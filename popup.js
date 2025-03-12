@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", function() {
           if (data.error) {
             responseDiv.innerText = "Error: " + data.error.message;
           } else {
-            const aiResponse = data.candidates[0].content.parts[0].text;
+            let aiResponse = data.candidates[0].content.parts[0].text;
+            aiResponse = aiResponse.replace(/\*/g, '');
             responseDiv.innerText = aiResponse;
           }
         });
