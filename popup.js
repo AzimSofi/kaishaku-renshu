@@ -3,11 +3,14 @@ document.addEventListener("DOMContentLoaded", function() {
   const modelInput = document.getElementById("model");
   const interpretationInput = document.getElementById("interpretation");
   const checkButton = document.getElementById("check");
+  const clearButton = document.getElementById("clear");
   const responseDiv = document.getElementById("response");
 
-  chrome.storage.sync.get(["apiKey", "model", "selectedText"], function(data) {
+  chrome.storage.sync.get(["apiKey", "model", "selectedText", "interpretation", "aiResponse"], function(data) {
     apiKeyInput.value = data.apiKey || "";
     modelInput.value = data.model || "gemini-2.0-flash";
+    interpretationInput.value = data.interpretation || "";
+    responseDiv.innerText = data.aiResponse || "";
     const selectedText = data.selectedText;
 
     apiKeyInput.addEventListener("change", function() {
@@ -15,6 +18,10 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     modelInput.addEventListener("change", function() {
       chrome.storage.sync.set({ model: modelInput.value });
+    });
+
+    interpretationInput.addEventListener("change", function() {
+      chrome.storage.sync.set({ interpretation: interpretationInput.value });
     });
 
     checkButton.addEventListener("click", function() {
@@ -49,8 +56,14 @@ document.addEventListener("DOMContentLoaded", function() {
             let aiResponse = data.candidates[0].content.parts[0].text;
             aiResponse = aiResponse.replace(/\*/g, '');
             responseDiv.innerText = aiResponse;
+            chrome.storage.sync.set({ aiResponse: aiResponse });
           }
         });
+    });
+
+    clearButton.addEventListener("click", function() {
+      responseDiv.innerText = "";
+      chrome.storage.sync.set({ aiResponse: "" });
     });
   });
 });
