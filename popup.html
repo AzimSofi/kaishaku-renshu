@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kaishaku Renshu</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kaishaku Renshu</h1>
+  <label for="apiKey">Gemini API Key:</label>
+  <input type="text" id="apiKey"><br><br>
+  <label for="model">Gemini Model:</label>
+  <input type="text" id="model" value="gemini-2.0-flash"><br><br>
+  <label for="interpretation">Your Interpretation:</label>
+  <textarea id="interpretation"></textarea><br><br>
+  <button id="check">Check with AI</button>
+  <div id="response"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
